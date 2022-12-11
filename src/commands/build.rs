@@ -60,6 +60,6 @@ pub(crate) fn build_project() -> Result<(), Report> {
                 .header("Suggestions:".green())
             });
     }
-    color_print(format!("Successfully built {project_name}"), "");
+    color_print(&format!("Successfully built {project_name}"), None);
     Ok(())
 }

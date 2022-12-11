@@ -20,6 +20,6 @@ pub(crate) fn run_project() -> Result<(), Report> {
             )
             .header("Suggestions:".green())
         })?;
-    color_print("Running", project_name);
+    color_print("Running", Some(&project_name));
     Ok(())
 }

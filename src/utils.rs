@@ -1,16 +1,13 @@
-use std::fmt::Display;
-
 use color_eyre::{eyre::eyre, eyre::Report, Section, SectionExt};
 use owo_colors::{OwoColorize, Stream::Stdout};
 
-pub(crate) fn color_print<S>(
-    message: impl AsRef<str> + Display,
-    extra_message: impl Into<Option<S>>,
-) where
-    S: AsRef<str> + Display,
+pub(crate) fn color_print(
+    message: &str,
+    extra_message: Option<&str>,
+)
 {
     println!();
-    if let Some(extra_message) = extra_message.into() {
+    if let Some(extra_message) = extra_message {
         println!(
             "{}{} {}",
             message.if_supports_color(Stdout, |text| text.bright_blue()),
@@ -23,7 +20,6 @@ pub(crate) fn color_print<S>(
             message.if_supports_color(Stdout, |text| text.bright_green())
         );
     }
-    println!();
 }
 
 pub(crate) fn guard_toybox_pdxinfo_present() -> Result<(), Report> {
