@@ -16,4 +16,5 @@ owo-colors = { version = "3.5.0", features = [
     "supports-color",
 ] }
 toml = "0.5.9"
+which = "4.3.0"
 # tracing = "0.1.37"
