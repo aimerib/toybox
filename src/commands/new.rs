@@ -41,9 +41,9 @@ pub(crate) fn new_project(name: Option<String>) -> Result<(), Report> {
 
     std::fs::write(project_path.join("src/main.lua"), main_lua).unwrap();
 
-    let toybox_toml = include_str!("../../templates/Toybox.toml.template");
-    let toybox_toml = toybox_toml.replace("{{name}}", &format!("\"{name}\""));
-    std::fs::write(project_path.join("Toybox.toml"), toybox_toml).unwrap();
+    let toybox_pdxinfo = include_str!("../../templates/pdxinfo.template");
+    let toybox_pdxinfo = toybox_pdxinfo.replace("{{name}}", &format!("{name}"));
+    std::fs::write(project_path.join("pdxinfo"), toybox_pdxinfo).unwrap();
 
     color_print("All done!", None);
 

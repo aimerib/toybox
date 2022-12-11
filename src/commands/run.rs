@@ -1,13 +1,13 @@
-use crate::utils::{guard_toybox_toml_present, parse_game_name_from_toybox_toml};
+use crate::utils::{guard_toybox_pdxinfo_present, parse_game_name_from_toybox_pdxinfo};
 use color_eyre::{eyre::eyre, eyre::Report, Section, SectionExt};
 use owo_colors::OwoColorize;
 
 use super::build::build_project;
 
 pub(crate) fn run_project() -> Result<(), Report> {
-    guard_toybox_toml_present()?;
+    guard_toybox_pdxinfo_present()?;
     build_project()?;
-    let project_name = parse_game_name_from_toybox_toml()?;
+    let project_name = parse_game_name_from_toybox_pdxinfo()?;
     let emulator_output = std::process::Command::new("open")
         .arg(format!("target/{project_name}.pdx"))
         .output()

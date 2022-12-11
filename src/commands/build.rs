@@ -1,11 +1,11 @@
-use crate::utils::{color_print, guard_toybox_toml_present, parse_game_name_from_toybox_toml};
+use crate::utils::{color_print, guard_toybox_pdxinfo_present, parse_game_name_from_toybox_pdxinfo};
 use color_eyre::{eyre::eyre, eyre::Report, Section, SectionExt};
 use owo_colors::OwoColorize;
 
 pub(crate) fn build_project() -> Result<(), Report> {
-    guard_toybox_toml_present()?;
+    guard_toybox_pdxinfo_present()?;
 
-    let project_name = parse_game_name_from_toybox_toml()?;
+    let project_name = parse_game_name_from_toybox_pdxinfo()?;
 
     let target_path = std::path::PathBuf::from("target");
     if !target_path.exists() {

@@ -1,0 +1,10 @@
+name={{name}}
+author=
+description=
+bundleID=com.example.{{name}}
+version=1.0
+buildNumber=
+imagePath=
+launchSoundPath=
+contentWarning=
+contentWarning2=
