@@ -1,6 +1,6 @@
 use color_eyre::eyre::Result;
 
-use clap::{Parser, Subcommand, ColorChoice};
+use clap::{Parser, Subcommand};
 
 mod commands;
 mod utils;
