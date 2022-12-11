@@ -40,21 +40,6 @@ pub(crate) fn build_project() -> Result<(), Report> {
         .header("Suggestions:".green())
     })?;
 
-    // if !pdc_output.status.success() {
-    //     return Err(eyre!("pdc is not installed"))
-    //         .with_section(move || {
-    //             "pdc is the compiler used to compile Toybox projects."
-    //                 .header("Explanation:".yellow())
-    //         })
-    //         .with_section(move || {
-    //             format!(
-    //                 "Try installing pdc using \"{}\".",
-    //                 "cargo install pdc".green()
-    //             )
-    //             .header("Suggestions:".green())
-    //         });
-    // }
-
     let pdc_output = std::process::Command::new(pdc_path)
         .arg("source")
         .arg(format!("target/{project_name}"))
@@ -75,6 +60,6 @@ pub(crate) fn build_project() -> Result<(), Report> {
                 .header("Suggestions:".green())
             });
     }
-    color_print(format!("Successfully built {project_name}"), None);
+    color_print(format!("Successfully built {project_name}"), "");
     Ok(())
 }

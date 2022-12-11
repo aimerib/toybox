@@ -1,15 +1,16 @@
 use color_eyre::eyre::Result;
 
-use clap::{Parser, Subcommand};
+use clap::{Parser, Subcommand, ColorChoice};
 
 mod commands;
 mod utils;
 use commands::new;
 
-/// Toybox is a project management tool for the Playdate system sdk.
-/// It is designed to make it easy to create and manage projects for the Playdate.
 #[derive(Parser)]
-#[command(author, version, about, long_about)]
+#[command(author = "Aimeri Baddouh")]
+#[command(version)]
+#[command(about = "Toybox is a project management tool for the Playdate system sdk.")]
+#[command(long_about = "Toybox is a project management tool for the Playdate system sdk.\nIt is designed to make it easy to create and manage projects for the Playdate.")]
 struct Cli {
     #[command(subcommand)]
     command: Commands,

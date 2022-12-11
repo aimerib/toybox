@@ -14,7 +14,7 @@ pub(crate) fn new_project(name: Option<String>) -> Result<(), Report> {
         }
     };
 
-    color_print("Creating new project", Some(&name));
+    color_print("Creating new project", &name);
 
     let project_path = std::path::PathBuf::from(&name);
 
@@ -42,10 +42,10 @@ pub(crate) fn new_project(name: Option<String>) -> Result<(), Report> {
     std::fs::write(project_path.join("source/main.lua"), main_lua).unwrap();
 
     let toybox_pdxinfo = include_str!("../../templates/pdxinfo.template");
-    let toybox_pdxinfo = toybox_pdxinfo.replace("{{name}}", &format!("{name}"));
+    let toybox_pdxinfo = toybox_pdxinfo.replace("{{name}}", &name);
     std::fs::write(project_path.join("pdxinfo"), toybox_pdxinfo).unwrap();
 
-    color_print("All done!", None);
+    color_print("All done!", "");
 
     Ok(())
 }
