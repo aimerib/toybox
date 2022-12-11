@@ -10,6 +10,7 @@ clap = { version = "4.0.29", features = ["derive"] }
 # color-eyre = "0.6.2"
 color-eyre = { version = "0.6.2", default-features = false }
 eyre = "0.6.8"
+open = "3.2.0"
 owo-colors = { version = "3.5.0", features = [
     "supports-colors",
     "supports-color",
