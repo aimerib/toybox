@@ -1,3 +1,5 @@
+use std::path::{PathBuf, Path};
+
 use color_eyre::{eyre::eyre, eyre::Report, Section, SectionExt};
 use owo_colors::{OwoColorize, Stream::Stdout};
 
@@ -6,7 +8,6 @@ pub(crate) fn color_print(
     extra_message: Option<&str>,
 )
 {
-    println!();
     if let Some(extra_message) = extra_message {
         println!(
             "{}{} {}",
@@ -22,14 +23,39 @@ pub(crate) fn color_print(
     }
 }
 
-pub(crate) fn guard_toybox_pdxinfo_present() -> Result<(), Report> {
-    let toybox_pdxinfo_path = std::path::PathBuf::from("pdxinfo");
-    if !toybox_pdxinfo_path.exists() {
-        return Err(eyre!("pdxinfo not found.")).with_section(move || {
-            "Please run \"toybox new\" to create a new project.".header("Suggestion:".yellow())
-        });
+pub(crate) fn guard_toybox_pdxinfo_present() -> Result<PathBuf, Report> {
+    // let toybox_pdxinfo_path = std::path::PathBuf::from("pdxinfo");
+    let mut path: PathBuf = std::env::current_dir()?;
+    let file = Path::new("pdxinfo");
+
+    loop {
+        path.push(file);
+
+        if path.is_file() {
+            if let Some(workdir) =  &path.parent(){
+                break Ok(workdir.into());
+            };
+            break Err(eyre!("pdxinfo not found.")).with_section(move || {
+                "Please run \"toybox new\" to create a new project.".header("Suggestion:".yellow())
+            });
+        }
+
+        if !(path.pop() && path.pop()) { // remove file && remove parent
+            break Err(eyre!("pdxinfo not found.")).with_section(move || {
+                        "Please run \"toybox new\" to create a new project.".header("Suggestion:".yellow())
+                    });
+        }
     }
-    Ok(())
+    // if !toybox_pdxinfo_path.exists() {
+    //     // recursively search for pdxinfo file in parent directories
+    //     // if not found, return error
+
+
+    //     return Err(eyre!("pdxinfo not found.")).with_section(move || {
+    //         "Please run \"toybox new\" to create a new project.".header("Suggestion:".yellow())
+    //     });
+    // }
+    // Ok(())
 }
 
 pub(crate) fn parse_game_name_from_toybox_pdxinfo() -> Result<String, Report> {

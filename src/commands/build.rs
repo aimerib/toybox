@@ -5,7 +5,8 @@ use which::which;
 
 
 pub(crate) fn build_project() -> Result<(), Report> {
-    guard_toybox_pdxinfo_present()?;
+    let workdir = guard_toybox_pdxinfo_present()?;
+    let workdir = workdir.display();
 
     let project_name = parse_game_name_from_toybox_pdxinfo()?;
 
@@ -34,8 +35,8 @@ pub(crate) fn build_project() -> Result<(), Report> {
     })?;
 
     let pdc_output = std::process::Command::new(pdc_path)
-        .arg("source")
-        .arg(format!("target/{project_name}"))
+        .arg(format!("{workdir}/source"))
+        .arg(format!("{workdir}/target/{project_name}"))
         .output()
         .expect("failed to execute process");
 
