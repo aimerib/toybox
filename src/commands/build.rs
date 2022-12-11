@@ -39,7 +39,7 @@ pub(crate) fn build_project() -> Result<(), Report> {
     }
 
     let pdc_output = std::process::Command::new("pdc")
-        .arg("src")
+        .arg("source")
         .arg(format!("target/{project_name}"))
         .output()
         .expect("failed to execute process");

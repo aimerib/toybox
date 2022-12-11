@@ -37,9 +37,9 @@ pub(crate) fn new_project(name: Option<String>) -> Result<(), Report> {
 
     std::fs::create_dir(&project_path).unwrap();
 
-    std::fs::create_dir(project_path.join("src")).unwrap();
+    std::fs::create_dir(project_path.join("source")).unwrap();
 
-    std::fs::write(project_path.join("src/main.lua"), main_lua).unwrap();
+    std::fs::write(project_path.join("source/main.lua"), main_lua).unwrap();
 
     let toybox_pdxinfo = include_str!("../../templates/pdxinfo.template");
     let toybox_pdxinfo = toybox_pdxinfo.replace("{{name}}", &format!("{name}"));
