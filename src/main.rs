@@ -24,19 +24,20 @@ enum Commands {
     },
     /// Builds the project using the installed SDK
     Build,
+    /// Builds and runs the project using the installed SDK
+    Run,
 }
 
 fn main() -> Result<()> {
-
     color_eyre::config::HookBuilder::default()
         .display_env_section(false)
         .install()?;
     let cli = Cli::parse();
 
- 
     match &cli.command {
         Commands::New { name } => new::new_project(name.clone())?,
         Commands::Build => commands::build::build_project()?,
+        Commands::Run => commands::run::run_project()?,
     };
     Ok(())
 }

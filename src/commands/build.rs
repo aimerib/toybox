@@ -1,10 +1,11 @@
-use crate::utils::{color_print, guard_toybox_toml_present};
+use crate::utils::{color_print, guard_toybox_toml_present, parse_game_name_from_toybox_toml};
 use color_eyre::{eyre::eyre, eyre::Report, Section, SectionExt};
 use owo_colors::OwoColorize;
 
 pub(crate) fn build_project() -> Result<(), Report> {
     guard_toybox_toml_present()?;
-    color_print("Building project", None);
+
+    let project_name = parse_game_name_from_toybox_toml()?;
 
     let target_path = std::path::PathBuf::from("target");
     if !target_path.exists() {
@@ -16,7 +17,7 @@ pub(crate) fn build_project() -> Result<(), Report> {
             std::fs::remove_dir_all("target").unwrap();
             std::fs::create_dir(&target_path).unwrap();
         }
-    }    
+    }
 
     let pdc_output = std::process::Command::new("which")
         .arg("pdc")
@@ -24,20 +25,39 @@ pub(crate) fn build_project() -> Result<(), Report> {
         .expect("failed to execute process");
     if !pdc_output.status.success() {
         return Err(eyre!("pdc is not installed"))
-            .with_section(move || "pdc is the compiler used to compile Toybox projects.".header("Explanation:".yellow()))
-            .with_section(move || format!("Try installing pdc using \"{}\".", "cargo install pdc".green()).header("Solutions:".green()));
+            .with_section(move || {
+                "pdc is the compiler used to compile Toybox projects."
+                    .header("Explanation:".yellow())
+            })
+            .with_section(move || {
+                format!(
+                    "Try installing pdc using \"{}\".",
+                    "cargo install pdc".green()
+                )
+                .header("Suggestions:".green())
+            });
     }
 
     let pdc_output = std::process::Command::new("pdc")
         .arg("src")
-        .arg("target")
+        .arg(format!("target/{project_name}"))
         .output()
         .expect("failed to execute process");
 
-        if !pdc_output.status.success() {
+    if !pdc_output.status.success() {
         return Err(eyre!("pdc exited with error"))
-            .with_section(move || "pdc is the compiler used to compile Toybox projects.".header("Explanation:".yellow()))
-            .with_section(move || format!("Try installing pdc using \"{}\".", "cargo install pdc".green()).header("Solutions:".green()));
+            .with_section(move || {
+                "pdc is the compiler used to compile Toybox projects."
+                    .header("Explanation:".yellow())
+            })
+            .with_section(move || {
+                format!(
+                    "Try installing pdc using \"{}\".",
+                    "cargo install pdc".green()
+                )
+                .header("Suggestions:".green())
+            });
     }
+    color_print(format!("Successfully built {project_name}"), None);
     Ok(())
 }

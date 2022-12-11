@@ -25,14 +25,14 @@ pub(crate) fn new_project(name: Option<String>) -> Result<(), Report> {
         if current_dir > 0 {
             return Err(eyre!("Current directory is not empty"))
                 .with_section(move || "A new project should only be created in an empty directory.".header("Explanation:".yellow()))
-                .with_section(move || format!("Try using a different name, removing the existing directory {}, or using \"{}\" instead.", name.red(), "toybox init".green()).header("Solutions:".green()));
+                .with_section(move || format!("Try using a different name, removing the existing directory {}, or using \"{}\" instead.", name.red(), "toybox init".green()).header("Suggestions:".green()));
         }
     }
 
     if project_path.exists() {
         return Err(eyre!("Current directory is not empty"))
             .with_section(move || "A new project should only be created in an empty directory.".header("Explanation:".yellow()))
-            .with_section(move || format!("Try using a different name, removing the existing directory {}, or using \"{}\" instead.", name.red(), "toybox init".green()).header("Solutions:".green()));
+            .with_section(move || format!("Try using a different name, removing the existing directory {}, or using \"{}\" instead.", name.red(), "toybox init".green()).header("Suggestions:".green()));
     }
 
     std::fs::create_dir(&project_path).unwrap();
