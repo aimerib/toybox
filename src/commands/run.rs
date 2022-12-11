@@ -14,6 +14,7 @@ pub(crate) fn run_project() -> Result<(), Report> {
     } else {
         format!("{workdir}/target/{project_name}.pdx")
     };
+    dbg!(&file_name);
     open::that(file_name)
         .with_section(move || {
             "The emulator is the program used to run Toybox projects."

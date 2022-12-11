@@ -8,6 +8,7 @@ pub(crate) fn build_project() -> Result<(), Report> {
     let workdir = guard_toybox_pdxinfo_present()?;
     let workdir = workdir.display();
 
+    dbg!(&workdir);
     let project_name = parse_game_name_from_toybox_pdxinfo()?;
 
     let target_path = std::path::PathBuf::from("target");
