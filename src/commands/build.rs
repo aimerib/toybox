@@ -21,13 +21,6 @@ pub(crate) fn build_project() -> Result<(), Report> {
         }
     }
 
-    // let pdc_output =
-
-    std::process::Command::new("which")
-        .arg("pdc")
-        .output()
-        .expect("failed to execute process");
-
     let pdc_path = which("pdc").with_section(move || {
         "pdc is the compiler used to compile Toybox projects."
             .header("Explanation:".yellow())

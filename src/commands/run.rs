@@ -8,7 +8,12 @@ pub(crate) fn run_project() -> Result<(), Report> {
     guard_toybox_pdxinfo_present()?;
     build_project()?;
     let project_name = parse_game_name_from_toybox_pdxinfo()?;
-    open::that(format!("target/{project_name}.pdx"))
+    let file_name = if std::env::consts::OS == "windows" {
+        format!("target/{project_name}.pdx/main.pdz")
+    } else {
+        format!("target/{project_name}.pdx")
+    };
+    open::that(file_name)
         .with_section(move || {
             "The emulator is the program used to run Toybox projects."
                 .header("Explanation:".yellow())
