@@ -23,14 +23,14 @@ pub(crate) fn build_project() -> Result<(), Report> {
         }
     }
 
-    let pdc_path = which("pdc").with_section(move || {
-        "pdc is the compiler used to compile Toybox projects."
+    let pdc_path = which("pdc") .with_section(move || {
+        "The compiler could not be found. It is the program used to prepare code into games that can be played."
             .header("Explanation:".yellow())
     })
     .with_section(move || {
         format!(
-            "Try installing pdc using \"{}\".",
-            "cargo install pdc".green()
+            "Try installing the Playdate SDK from: {}\nMake sure that the SDK is configured correctly, and you can run the command \"pdc\" in your terminal.",
+            "https://play.date/dev/".green()
         )
         .header("Suggestions:".green())
     })?;

@@ -17,13 +17,13 @@ pub(crate) fn run_project() -> Result<(), Report> {
     dbg!(&file_name);
     open::that(file_name)
         .with_section(move || {
-            "The emulator is the program used to run Toybox projects."
+            "The emulator could not be found. It is the program used to run Toybox projects."
                 .header("Explanation:".yellow())
         })
         .with_section(move || {
             format!(
-                "Try installing the emulator using \"{}\".",
-                "cargo install emulator".green()
+                "Try installing the Playdate SDK from: \"{}\"\nMake sure that the SDK is configured correctly, and you can run the command \"pdc\" in your terminal.",
+                "https://play.date/dev/".green()
             )
             .header("Suggestions:".green())
         })?;
